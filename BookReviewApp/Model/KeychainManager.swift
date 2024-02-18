@@ -34,7 +34,7 @@ final class KeychainManager {
     func saveToken(token: Data, type: TokenType) -> Bool {
         let query = [
             kSecClass: kSecClassGenericPassword, // kSecClass: 保存するアイテムの種類を指定します。
-            kSecAttrService: "com.amebaownd.yukifuruhashi.BoolReviewApp",     // kSecAttrService: 保存するアイテムを識別するための文字列。一般的にアプリ固有の文字列を利用します。
+            kSecAttrService: "com.amebaownd.yukifuruhashi.BookReviewApp",     // kSecAttrService: 保存するアイテムを識別するための文字列。一般的にアプリ固有の文字列を利用します。
             kSecAttrAccount: type.rawValue, // kSecAttrAccount: 保存するアイテムをさらに細分化して識別するための文字列。
             kSecValueData: token // kSecValueData: 実際に保存したいデータ。Data型で保存している。
         ] as CFDictionary
@@ -67,7 +67,7 @@ final class KeychainManager {
     func getToken(for type: TokenType) -> String? {
         let query = [
             kSecClass: kSecClassGenericPassword,
-            kSecAttrService: "com.amebaownd.yukifuruhashi.BoolReviewApp",
+            kSecAttrService: "com.amebaownd.yukifuruhashi.BookReviewApp",
             kSecAttrAccount: type.rawValue,
             kSecReturnData: kCFBooleanTrue as Any
         ] as CFDictionary
@@ -91,7 +91,7 @@ final class KeychainManager {
     func deleteToken(for type: TokenType) -> Bool {
         let query = [
             kSecClass: kSecClassGenericPassword,
-            kSecAttrService: "com.amebaownd.yukifuruhashi.BoolReviewApp",
+            kSecAttrService: "com.amebaownd.yukifuruhashi.BookReviewApp",
             kSecAttrAccount: type.rawValue,
             kSecReturnData: kCFBooleanTrue as Any
         ] as CFDictionary
