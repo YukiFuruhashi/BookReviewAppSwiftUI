@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B62A5D252B6FE24300806AF5 /* BoolReviewAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62A5D242B6FE24300806AF5 /* BoolReviewAppApp.swift */; };
+		B62A5D252B6FE24300806AF5 /* BookReviewAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62A5D242B6FE24300806AF5 /* BookReviewAppApp.swift */; };
 		B62A5D272B6FE24300806AF5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62A5D262B6FE24300806AF5 /* ContentView.swift */; };
 		B62A5D292B6FE24600806AF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B62A5D282B6FE24600806AF5 /* Assets.xcassets */; };
 		B62A5D2C2B6FE24600806AF5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B62A5D2B2B6FE24600806AF5 /* Preview Assets.xcassets */; };
@@ -22,11 +22,15 @@
 		B62A5D452B71230B00806AF5 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62A5D442B71230B00806AF5 /* Book.swift */; };
 		B62A5D482B71252B00806AF5 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B62A5D472B71252B00806AF5 /* Alamofire */; };
 		B62A5D4B2B71259E00806AF5 /* BookAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62A5D4A2B71259E00806AF5 /* BookAPI.swift */; };
+		B6891C6E2B78C6A100A29D99 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6891C6D2B78C6A100A29D99 /* KeychainManager.swift */; };
+		B6891C702B7A07B800A29D99 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6891C6F2B7A07B800A29D99 /* WebView.swift */; };
+		B6891C722B7A0F9300A29D99 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6891C712B7A0F9300A29D99 /* Validation.swift */; };
+		B6891C752B7A1BED00A29D99 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = B6891C742B7A1BED00A29D99 /* Reachability */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B62A5D212B6FE24300806AF5 /* BoolReviewApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoolReviewApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B62A5D242B6FE24300806AF5 /* BoolReviewAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolReviewAppApp.swift; sourceTree = "<group>"; };
+		B62A5D242B6FE24300806AF5 /* BookReviewAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookReviewAppApp.swift; sourceTree = "<group>"; };
 		B62A5D262B6FE24300806AF5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B62A5D282B6FE24600806AF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B62A5D2B2B6FE24600806AF5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -40,6 +44,9 @@
 		B62A5D412B6FEEBF00806AF5 /* BookDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailView.swift; sourceTree = "<group>"; };
 		B62A5D442B71230B00806AF5 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		B62A5D4A2B71259E00806AF5 /* BookAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookAPI.swift; sourceTree = "<group>"; };
+		B6891C6D2B78C6A100A29D99 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		B6891C6F2B7A07B800A29D99 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		B6891C712B7A0F9300A29D99 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +55,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B62A5D482B71252B00806AF5 /* Alamofire in Frameworks */,
+				B6891C752B7A1BED00A29D99 /* Reachability in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,7 +81,7 @@
 		B62A5D232B6FE24300806AF5 /* BoolReviewApp */ = {
 			isa = PBXGroup;
 			children = (
-				B62A5D242B6FE24300806AF5 /* BoolReviewAppApp.swift */,
+				B62A5D242B6FE24300806AF5 /* BookReviewAppApp.swift */,
 				B62A5D432B7122E800806AF5 /* Model */,
 				B62A5D342B6FE87F00806AF5 /* View */,
 				B62A5D492B71256C00806AF5 /* ViewModel */,
@@ -112,6 +120,9 @@
 			children = (
 				B62A5D442B71230B00806AF5 /* Book.swift */,
 				B62A5D4A2B71259E00806AF5 /* BookAPI.swift */,
+				B6891C6D2B78C6A100A29D99 /* KeychainManager.swift */,
+				B6891C6F2B7A07B800A29D99 /* WebView.swift */,
+				B6891C712B7A0F9300A29D99 /* Validation.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -141,6 +152,7 @@
 			name = BoolReviewApp;
 			packageProductDependencies = (
 				B62A5D472B71252B00806AF5 /* Alamofire */,
+				B6891C742B7A1BED00A29D99 /* Reachability */,
 			);
 			productName = BoolReviewApp;
 			productReference = B62A5D212B6FE24300806AF5 /* BoolReviewApp.app */;
@@ -172,6 +184,7 @@
 			mainGroup = B62A5D182B6FE24300806AF5;
 			packageReferences = (
 				B62A5D462B71252B00806AF5 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				B6891C732B7A1BED00A29D99 /* XCRemoteSwiftPackageReference "Reachability" */,
 			);
 			productRefGroup = B62A5D222B6FE24300806AF5 /* Products */;
 			projectDirPath = "";
@@ -199,6 +212,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6891C6E2B78C6A100A29D99 /* KeychainManager.swift in Sources */,
 				B62A5D402B6FEDEF00806AF5 /* EditBookView.swift in Sources */,
 				B62A5D4B2B71259E00806AF5 /* BookAPI.swift in Sources */,
 				B62A5D362B6FE89700806AF5 /* SignupView.swift in Sources */,
@@ -210,7 +224,9 @@
 				B62A5D332B6FE62D00806AF5 /* LoginView.swift in Sources */,
 				B62A5D382B6FE9BD00806AF5 /* BookListView.swift in Sources */,
 				B62A5D272B6FE24300806AF5 /* ContentView.swift in Sources */,
-				B62A5D252B6FE24300806AF5 /* BoolReviewAppApp.swift in Sources */,
+				B62A5D252B6FE24300806AF5 /* BookReviewAppApp.swift in Sources */,
+				B6891C722B7A0F9300A29D99 /* Validation.swift in Sources */,
+				B6891C702B7A07B800A29D99 /* WebView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,6 +444,14 @@
 				minimumVersion = 5.8.1;
 			};
 		};
+		B6891C732B7A1BED00A29D99 /* XCRemoteSwiftPackageReference "Reachability" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -435,6 +459,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B62A5D462B71252B00806AF5 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		B6891C742B7A1BED00A29D99 /* Reachability */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6891C732B7A1BED00A29D99 /* XCRemoteSwiftPackageReference "Reachability" */;
+			productName = Reachability;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
