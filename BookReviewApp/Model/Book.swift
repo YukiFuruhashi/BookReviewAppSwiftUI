@@ -1,6 +1,6 @@
 //
 //  Book.swift
-//  BoolReviewApp
+//  BookReviewApp
 //
 //  Created by yukifuruhashi on 2024/02/05.
 //

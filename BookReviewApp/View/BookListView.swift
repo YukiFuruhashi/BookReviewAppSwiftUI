@@ -1,12 +1,13 @@
 //
 //  BookListView.swift
-//  BoolReviewApp
+//  BookReviewApp
 //
 //  Created by yukifuruhashi on 2024/02/05.
 //
 
 import SwiftUI
 import Alamofire
+import Reachability
 
 struct BookListView: View {
     
@@ -16,6 +17,9 @@ struct BookListView: View {
     @State var offset = 0
     
     @State private var isLoading: Bool = false
+    
+    @State private var networkAlert: Bool = false
+
         
     var body: some View {
         
@@ -38,7 +42,7 @@ struct BookListView: View {
                                         Rectangle()
                                             .frame(width: 100, height: 100)
                                             .foregroundStyle(Color.pink)
-                                            .id(res.title?.startIndex)
+                                            .id(offset)
                                         
                                         Text("タイトル")
                                             .font(.title2)
@@ -75,54 +79,67 @@ struct BookListView: View {
                                         Text(res.review ?? "")
                                             .padding(.bottom, 30)
                                         
-                                        Text("\(res.isMine)" as String)
-                                        
-                                        Text("\(offset)")
-                                        
                                     } // VStackここまで
-//                                    .navigationDestination(for: String.self) { value in
-//                                    }
                                     
                                 } // NavigationLinkここまで
-                                
-
-                               
                                 
                             }
                         } // List ここまで
                         .refreshable {
-                            isLoading = true
-                            offset = 0
+                            //MARK: ネットワーク判定
+                            let reachability = try! Reachability()
                             
+                            switch reachability.connection {
+                            case .unavailable:
+                                networkAlert.toggle()
+                                return
+                                
+                            case .wifi:
+                                print("Wi-Fi接続しています")
+                            case .cellular:
+                                print("キャリア通信しています")
+                            }
+                            //MARK: ネットワーク判定ここまで
+                            
+                            
+                            isLoading = true
+                            
+                            offset = 0
                             bookAPI.fetchBook(offset: offset) { book in
                                 isLoading = false
                                 self.books = book!
                             }
+                            
                         }
                         .listStyle(.grouped)
-                        .onAppear(perform: {
-                            isLoading = true
-                            bookAPI.fetchBook(offset: offset) { book in
-                                isLoading = false
-                                self.books = book!
-                            }
-                        })
-                        
                         
                         
                         Button(action: {
+                            //MARK: ネットワーク判定
+                            let reachability = try! Reachability()
+                            
+                            switch reachability.connection {
+                            case .unavailable:
+                                networkAlert.toggle()
+                                return
+                                
+                            case .wifi:
+                                print("Wi-Fi接続しています")
+                            case .cellular:
+                                print("キャリア通信しています")
+                            }
+                            //MARK: ネットワーク判定ここまで
+                            
+                            
                             isLoading = true
                             offset += 10
                             
                             bookAPI.fetchBook(offset: offset) { book in
                                 isLoading = false
                                 self.books = book!
-                                
                             }
                             
-                            guard let unwrappedBooksFirst = books.first else { return }
-                            proxy.scrollTo(unwrappedBooksFirst)
-                            
+                            proxy.scrollTo(0)
                         }, label: {
                             Text("次の10件へ")
                                 .frame(width: 150, height: 20)
@@ -143,15 +160,41 @@ struct BookListView: View {
                     }
                     
                 } // ZStackここまで
-                
-            } //ScrollViewReader ここまで
+                .onAppear(perform: {
+                    //proxy.scrollTo(0)
+                    
+                    //MARK: ネットワーク判定
+                    let reachability = try! Reachability()
+                    
+                    switch reachability.connection {
+                    case .unavailable:
+                        networkAlert.toggle()
+                        return
+                        
+                    case .wifi:
+                        print("Wi-Fi接続しています")
+                    case .cellular:
+                        print("キャリア通信しています")
+                    }
+                    //MARK: ネットワーク判定ここまで
 
+                    isLoading = true
+                    
+                    bookAPI.fetchBook(offset: offset) { book in
+                        isLoading = false
+                        self.books = book!
+                    }
+                })
+            } //ScrollViewReader ここまで
+            .alert("ネットワークに接続されていません", isPresented: $networkAlert) {
+                Button("OK") {
+                    
+                }
+            } message: {
+                Text("ネットワーク状況を確認して下さい。")
+            }
         } //NavigationStack ここまで
-            
-        
-        
-        
-    }
+    } // bodyここまで
 }
 
 

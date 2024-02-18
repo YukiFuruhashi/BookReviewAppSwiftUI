@@ -29,10 +29,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B62A5D212B6FE24300806AF5 /* BoolReviewApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoolReviewApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B62A5D242B6FE24300806AF5 /* BookReviewAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookReviewAppApp.swift; sourceTree = "<group>"; };
+		B62A5D212B6FE24300806AF5 /* BookReviewApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BookReviewApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B62A5D242B6FE24300806AF5 /* BookReviewAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BookReviewAppApp.swift; path = BookReviewApp/BookReviewAppApp.swift; sourceTree = "<group>"; };
 		B62A5D262B6FE24300806AF5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		B62A5D282B6FE24600806AF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B62A5D282B6FE24600806AF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = BookReviewApp/Assets.xcassets; sourceTree = "<group>"; };
 		B62A5D2B2B6FE24600806AF5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B62A5D322B6FE62D00806AF5 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		B62A5D352B6FE89700806AF5 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
@@ -65,7 +65,7 @@
 		B62A5D182B6FE24300806AF5 = {
 			isa = PBXGroup;
 			children = (
-				B62A5D232B6FE24300806AF5 /* BoolReviewApp */,
+				B62A5D232B6FE24300806AF5 /* BookeviewApp */,
 				B62A5D222B6FE24300806AF5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -73,22 +73,21 @@
 		B62A5D222B6FE24300806AF5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B62A5D212B6FE24300806AF5 /* BoolReviewApp.app */,
+				B62A5D212B6FE24300806AF5 /* BookReviewApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B62A5D232B6FE24300806AF5 /* BoolReviewApp */ = {
+		B62A5D232B6FE24300806AF5 /* BookeviewApp */ = {
 			isa = PBXGroup;
 			children = (
 				B62A5D242B6FE24300806AF5 /* BookReviewAppApp.swift */,
 				B62A5D432B7122E800806AF5 /* Model */,
 				B62A5D342B6FE87F00806AF5 /* View */,
-				B62A5D492B71256C00806AF5 /* ViewModel */,
 				B62A5D282B6FE24600806AF5 /* Assets.xcassets */,
 				B62A5D2A2B6FE24600806AF5 /* Preview Content */,
 			);
-			path = BoolReviewApp;
+			name = BookeviewApp;
 			sourceTree = "<group>";
 		};
 		B62A5D2A2B6FE24600806AF5 /* Preview Content */ = {
@@ -96,7 +95,8 @@
 			children = (
 				B62A5D2B2B6FE24600806AF5 /* Preview Assets.xcassets */,
 			);
-			path = "Preview Content";
+			name = "Preview Content";
+			path = "BookReviewApp/Preview Content";
 			sourceTree = "<group>";
 		};
 		B62A5D342B6FE87F00806AF5 /* View */ = {
@@ -112,7 +112,8 @@
 				B62A5D412B6FEEBF00806AF5 /* BookDetailView.swift */,
 				B62A5D3F2B6FEDEF00806AF5 /* EditBookView.swift */,
 			);
-			path = View;
+			name = View;
+			path = BookReviewApp/View;
 			sourceTree = "<group>";
 		};
 		B62A5D432B7122E800806AF5 /* Model */ = {
@@ -124,22 +125,16 @@
 				B6891C6F2B7A07B800A29D99 /* WebView.swift */,
 				B6891C712B7A0F9300A29D99 /* Validation.swift */,
 			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		B62A5D492B71256C00806AF5 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
+			name = Model;
+			path = BookReviewApp/Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B62A5D202B6FE24300806AF5 /* BoolReviewApp */ = {
+		B62A5D202B6FE24300806AF5 /* BookReviewApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B62A5D2F2B6FE24600806AF5 /* Build configuration list for PBXNativeTarget "BoolReviewApp" */;
+			buildConfigurationList = B62A5D2F2B6FE24600806AF5 /* Build configuration list for PBXNativeTarget "BookReviewApp" */;
 			buildPhases = (
 				B62A5D1D2B6FE24300806AF5 /* Sources */,
 				B62A5D1E2B6FE24300806AF5 /* Frameworks */,
@@ -149,13 +144,13 @@
 			);
 			dependencies = (
 			);
-			name = BoolReviewApp;
+			name = BookReviewApp;
 			packageProductDependencies = (
 				B62A5D472B71252B00806AF5 /* Alamofire */,
 				B6891C742B7A1BED00A29D99 /* Reachability */,
 			);
 			productName = BoolReviewApp;
-			productReference = B62A5D212B6FE24300806AF5 /* BoolReviewApp.app */;
+			productReference = B62A5D212B6FE24300806AF5 /* BookReviewApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -173,7 +168,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B62A5D1C2B6FE24300806AF5 /* Build configuration list for PBXProject "BoolReviewApp" */;
+			buildConfigurationList = B62A5D1C2B6FE24300806AF5 /* Build configuration list for PBXProject "BookReviewApp" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -190,7 +185,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B62A5D202B6FE24300806AF5 /* BoolReviewApp */,
+				B62A5D202B6FE24300806AF5 /* BookReviewApp */,
 			);
 		};
 /* End PBXProject section */
@@ -415,7 +410,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B62A5D1C2B6FE24300806AF5 /* Build configuration list for PBXProject "BoolReviewApp" */ = {
+		B62A5D1C2B6FE24300806AF5 /* Build configuration list for PBXProject "BookReviewApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B62A5D2D2B6FE24600806AF5 /* Debug */,
@@ -424,7 +419,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B62A5D2F2B6FE24600806AF5 /* Build configuration list for PBXNativeTarget "BoolReviewApp" */ = {
+		B62A5D2F2B6FE24600806AF5 /* Build configuration list for PBXNativeTarget "BookReviewApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B62A5D302B6FE24600806AF5 /* Debug */,

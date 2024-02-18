@@ -1,12 +1,13 @@
 //
 //  UserView.swift
-//  BoolReviewApp
+//  BookReviewApp
 //
 //  Created by yukifuruhashi on 2024/02/05.
 //
 
 import SwiftUI
 import Alamofire
+import Reachability
 
 struct UserView: View {
     
@@ -17,12 +18,20 @@ struct UserView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @State private var showAlert : Bool = false
+    @State private var showUpdateAlert : Bool = false
     @State private var showLogoutAlert : Bool = false
+    @State private var networkAlert: Bool = false
+
     
     @State private var isLoading: Bool = false
     
     @FocusState var focus: Bool
+    
+    let bookAPI = BookAPI()
+    
+    @State private var nameErrorLabel = ""
+    
+    
     
     var body: some View {
         
@@ -44,7 +53,7 @@ struct UserView: View {
                     }
                     
                     Spacer()
-                                
+                    
                     Text("現在の名前")
                     
                     Text(currentName)
@@ -56,6 +65,9 @@ struct UserView: View {
                         .textFieldStyle(.roundedBorder)
                         .focused($focus)
                     
+                    Text(nameErrorLabel)
+                        .foregroundStyle(Color.red)
+                    
                     Spacer()
                     
                     Text(ErrorMessageJP)
@@ -65,7 +77,35 @@ struct UserView: View {
                     HStack {
                         Spacer()
                         
+                        //更新ボタン
                         Button(action: {
+                            nameErrorLabel = ""
+                            
+                            //MARK: ネットワーク判定
+                            let reachability = try! Reachability()
+                            
+                            switch reachability.connection {
+                            case .unavailable:
+                                networkAlert.toggle()
+                                return
+                                
+                            case .wifi:
+                                print("Wi-Fi接続しています")
+                            case .cellular:
+                                print("キャリア通信しています")
+                            }
+                            //MARK: ネットワーク判定ここまで
+                            
+                            
+                            //MARK: バリデーション
+                            let nameValidate = Validation.postValidation(text: name)
+                            
+                            nameErrorLabel = nameValidate.answerText
+                            // バリデーションここまで
+                            
+                            // バリデーションが全て通った場合にのみAPIを叩く。
+                            guard nameValidate.boolian else { return }
+                            
                             isLoading = true
                             
                             updateNameAPI(name: name) { response in
@@ -77,11 +117,15 @@ struct UserView: View {
                                 
                                 guard let unwrappedName = response?.name else { return }
                                 
-                                currentName = unwrappedName
-                                UserDefaults.standard.set(unwrappedName, forKey: "Name")
-
+                                if KeychainManager.shared.saveToken(token: unwrappedName.data(using: .utf8) ?? Data(), type: .Name) {
+                                    print("Name保存成功")
+                                } else {
+                                    print("Name保存失敗")
+                                }
                                 
-                                showAlert.toggle()
+                                currentName = unwrappedName
+                                
+                                showUpdateAlert.toggle()
                             }
                         }, label: {
                             Text("更新")
@@ -92,7 +136,7 @@ struct UserView: View {
                         
                         Spacer()
                     }
-
+                    
                 } // VStackここまで
                 .padding()
                 
@@ -102,10 +146,26 @@ struct UserView: View {
                         .tint(Color.blue)
                         .scaleEffect(3)
                 }
-
+                
             } // ZStackここまで
             .onAppear(perform: {
-                currentName = UserDefaults.standard.object(forKey: "Name") as? String ?? ""
+                guard KeychainManager.shared.getToken(for: .accessToken) != nil else { return }
+                
+                isLoading = true
+                
+                bookAPI.getUserNameBookAPI { response in
+                    isLoading = false
+                    
+                    guard let unwrappedName = response.name else { return }
+                    
+                    if KeychainManager.shared.saveToken(token: unwrappedName.data(using: .utf8) ?? Data(), type: .Name) {
+                        print("Name保存成功")
+                    } else {
+                        print("Name保存失敗")
+                    }
+                    
+                    currentName = unwrappedName
+                }
             })
             .toolbar(content: {
                 ToolbarItemGroup(placement: .keyboard) {
@@ -116,8 +176,10 @@ struct UserView: View {
                 }
             }) // toolbarここまで
             
-            .alert("完了", isPresented: $showAlert) {
-                
+            .alert("完了", isPresented: $showUpdateAlert) {
+                Button("OK") {
+                    name = ""
+                }
             } message: {
                 Text("更新しました。")
             }
@@ -125,25 +187,44 @@ struct UserView: View {
             .alert("ログアウト", isPresented: $showLogoutAlert) {
                 Button("OK") {
                     dismiss()
-                    UserDefaults.standard.removeObject(forKey: "Token")
-                    UserDefaults.standard.removeObject(forKey: "Name")
+                    
+                    if KeychainManager.shared.deleteToken(for: .accessToken) {
+                        print("トークン削除成功")
+                    } else {
+                        print("トークン削除失敗")
+                    }
+                    
+                    if KeychainManager.shared.deleteToken(for: .Name) {
+                        print("Name削除成功")
+                    } else {
+                        print("Name削除失敗")
+                    }
+                    
                 }
             } message: {
                 Text("ログアウトしました。")
             }
-
+            
+            .alert("ネットワークに接続されていません", isPresented: $networkAlert) {
+                Button("OK") {
+                    
+                }
+            } message: {
+                Text("ネットワーク状況を確認して下さい。")
+            }
+            
         } // NavigationViewここまで
         
     } // bodyここまで
     
     
     
-
+    
     func updateNameAPI(name: String, completion: @escaping (Book?) -> Void) {
         
-        let token = UserDefaults.standard.object(forKey: "Token") as? String
+        let token = KeychainManager.shared.getToken(for: .accessToken) ?? ""
         
-        lazy var headers: HTTPHeaders = ["Authorization": "Bearer \(token ?? "")"]
+        lazy var headers: HTTPHeaders = ["Authorization": "Bearer \(token)"]
         
         var parameters = ["name": ""]
         

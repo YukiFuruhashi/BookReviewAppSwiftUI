@@ -1,11 +1,12 @@
 //
 //  ContentView.swift
-//  BoolReviewApp
+//  BookReviewApp
 //
 //  Created by yukifuruhashi on 2024/02/05.
 //
 
 import SwiftUI
+import Alamofire
 
 struct ContentView: View {
     
@@ -16,7 +17,7 @@ struct ContentView: View {
     let bookAPI = BookAPI()
     @State var books: [Book] = []
     
-    @State private var isLoading: Bool = false
+    @State var isLoading: Bool = false
     
     
     var body: some View {
@@ -71,23 +72,20 @@ struct ContentView: View {
                     Text("ログイン中...")
                         .padding()
                         .padding()
-
                 }
             }
             
-        }
+        } // ZStackここまで
         .onAppear(perform: {
-            if UserDefaults.standard.object(forKey: "Token") == nil {
-                return
-            }
+            guard KeychainManager.shared.getToken(for: .accessToken) != nil  else { return }
             
             isLoading = true
             
-            bookAPI.skipLoginBookAPI { response in
+            skipLoginBookAPI { response in
                 isLoading = false
+
+                guard response.name != nil else { return }
                 
-                guard let name = response.name else { return }
-                UserDefaults.standard.setValue(name, forKey: "Name")
                 showHomeView = true
             }
         })
@@ -95,7 +93,42 @@ struct ContentView: View {
             HomeView()
         }
         
+    } // bodyここまで
+    
+    
+    
+    func skipLoginBookAPI(completion: @escaping (Book) -> Void) {
+        
+        let token = KeychainManager.shared.getToken(for: .accessToken) ?? ""
+        
+        lazy var skipLoginHeaders: HTTPHeaders = ["Authorization": "Bearer \(token)"]
+        
+        AF.request(
+            "https://railway.bookreview.techtrain.dev/users",
+            method: .get,
+            parameters: nil,
+            encoding: JSONEncoding.default,
+            headers: skipLoginHeaders)
+        .response { response in
+            debugPrint(response)
+                        
+            guard let unwrappedData = response.data else { return }
+
+                do {
+                    // JSONデータを構造体に準拠した形式に変換↓
+                    let jsonData = try JSONDecoder().decode(Book.self, from: unwrappedData)
+                    completion(jsonData)
+                } catch {
+                    print("エラー")
+                    print(error.localizedDescription)
+                    isLoading = false
+                }
+            
+        }
     }
+    
+    
+    
 }
 
 #Preview {

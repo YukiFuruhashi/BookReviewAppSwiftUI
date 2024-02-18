@@ -1,6 +1,6 @@
 //
 //  BookAPI.swift
-//  BoolReviewApp
+//  BookReviewApp
 //
 //  Created by yukifuruhashi on 2024/02/05.
 //
@@ -11,48 +11,15 @@ import Alamofire
 class BookAPI {
     
     var book: [Book] = []
-    
-    
-    
-    func skipLoginBookAPI(completion: @escaping (Book) -> Void) {
-        
-        // as?を使ったAny型からString型へのダウンキャスト
-        let token = UserDefaults.standard.object(forKey: "Token") as? String
-        
-        lazy var skipLoginHeaders: HTTPHeaders = ["Authorization": "Bearer \(token ?? "")"]
-        
-        AF.request(
-            "https://railway.bookreview.techtrain.dev/users",
-            method: .get,
-            parameters: nil,
-            encoding: JSONEncoding.default,
-            headers: skipLoginHeaders)
-        .response { response in
-            debugPrint(response)
-            
-            guard let unwrappedData = response.data else { return }
-            
-            do {
-                // JSONデータを構造体に準拠した形式に変換↓
-                let jsonData = try JSONDecoder().decode(Book.self, from: unwrappedData)
-                //print(jsonData)
-                completion(jsonData)
-            } catch {
-                print("エラー")
-                print(error.localizedDescription)
-            }
-            
-        }
-    }
+    var status = ""
     
     
     
     func fetchBook(offset: Int, completion: @escaping ([Book]?) -> Void) {
         
-        // as?を使ったAny型からString型へのダウンキャスト
-        let fetchBooksBearerToken = UserDefaults.standard.object(forKey: "Token") as? String
+        let token = KeychainManager.shared.getToken(for: .accessToken) ?? ""
         
-        lazy var fetchBooksHeaders: HTTPHeaders = ["Authorization": "Bearer \(fetchBooksBearerToken ?? "")"]
+        lazy var fetchBooksHeaders: HTTPHeaders = ["Authorization": "Bearer \(token)"]
         
         AF.request(
             "https://railway.bookreview.techtrain.dev/books?offset=\(offset)",
@@ -68,7 +35,7 @@ class BookAPI {
                 let decoder: JSONDecoder = JSONDecoder()
                 // JSONデータを構造体に準拠した形式に変換↓
                 let json = try decoder.decode([Book].self, from: unwrappedData)
-                print(json)
+                //print(json)
                 completion(json)
             } catch {
                 print("エラー")
@@ -79,7 +46,7 @@ class BookAPI {
     
     
     
-    func SignupBookAPI(name: String, email: String, password: String, completion: @escaping (Book?) -> Void) {
+    func signupBookAPI(name: String, email: String, password: String, completion: @escaping (Book?) -> Void) {
         
         var parameters = [
             "name": "",
@@ -114,11 +81,11 @@ class BookAPI {
                 print(error.localizedDescription)
             }
         }
-        }
+    }
     
     
     
-    func LoginBookAPI(email: String, password: String, completion: @escaping (Book?) -> Void) {
+    func loginBookAPI(email: String, password: String, completion: @escaping (Book?) -> Void) {
         
         var parameters = [
             "email": "",
@@ -160,10 +127,9 @@ class BookAPI {
     
     func postBookAPI(title: String, url: String, detail: String, review:String, completion: @escaping (Book) -> Void) {
         
-        // as?を使ったAny型からString型へのダウンキャスト
-        let token = UserDefaults.standard.object(forKey: "Token") as? String
+        let token = KeychainManager.shared.getToken(for: .accessToken) ?? ""
         
-        lazy var headers: HTTPHeaders = ["Authorization": "Bearer \(token ?? "")"]
+        lazy var headers: HTTPHeaders = ["Authorization": "Bearer \(token)"]
         
         var parameters = [
             "title": "",
@@ -203,10 +169,40 @@ class BookAPI {
     
     
     
+    func getUserNameBookAPI(completion: @escaping (Book) -> Void) {
+        
+        let token = KeychainManager.shared.getToken(for: .accessToken) ?? ""
+        
+        lazy var skipLoginHeaders: HTTPHeaders = ["Authorization": "Bearer \(token)"]
+        
+        AF.request(
+            "https://railway.bookreview.techtrain.dev/users",
+            method: .get,
+            parameters: nil,
+            encoding: JSONEncoding.default,
+            headers: skipLoginHeaders)
+        .response { response in
+            debugPrint(response)
+            
+            guard let unwrappedData = response.data else { return }
+            
+            do {
+                // JSONデータを構造体に準拠した形式に変換↓
+                let jsonData = try JSONDecoder().decode(Book.self, from: unwrappedData)
+                completion(jsonData)
+            } catch {
+                print("エラー")
+                print(error.localizedDescription)
+            }
+            
+        }
+    }
     
-
     
     
     
-   
+    
+    
+    
+    
 }

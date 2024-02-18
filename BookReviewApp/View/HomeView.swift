@@ -1,6 +1,6 @@
 //
 //  HomeView.swift
-//  BoolReviewApp
+//  BookReviewApp
 //
 //  Created by yukifuruhashi on 2024/02/05.
 //
@@ -13,27 +13,24 @@ struct HomeView: View {
     
     var body: some View {
         
-        TabView {
+        TabView(selection: $selection) {
             BookListView()
                 .tabItem {
                     Label("書籍一覧", systemImage: "book")
-                        .tag(0)
                 }
-            
+                .tag(0)
             
             UserView()
                 .tabItem {
                     Label("ユーザー", systemImage: "person")
-                        .tag(1)
                 }
-                
+                .tag(1)
             
             PostBookView(selection: $selection)
                 .tabItem {
                     Label("書籍投稿", systemImage: "square.and.pencil")
-                        .tag(2)
                 }
-                
+                .tag(2)
             
         } // TabViewここまで
         
